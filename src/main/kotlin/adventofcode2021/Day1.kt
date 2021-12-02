@@ -1,6 +1,7 @@
+import java.io.File
 
 fun main(){
-    val myList = listOf<Int>(0, 10, 5, 8, 6, 11, 14)
+    val myList = getDataFromFile()
     println("Day 1 Advent of Code 2021")
     println("My List has ${myList.size} elements")
     val increases = checkListForIncreases(myList)
@@ -24,22 +25,29 @@ fun main(){
  * else do nothing
  */
 
-fun compareElements(i: Int, j:Int): Boolean {
-    return i > j
-}
-
 fun checkListForIncreases(data: List<Int>): Int {
-    println("in here")
     var numOfIncreases = 0
 
     for (i in 0..data.size - 2) {
         // range should be from first element to second to last
         // for second to last element, i+1 will be last element
         if (data[i + 1] > data[i]) {
-            println("${data[i + 1]} > ${data[i]}")
             numOfIncreases += 1
         }
     }
 
     return numOfIncreases
+}
+
+/**
+ * Get Data from TXT File
+ */
+fun getDataFromFile(): List<Int> {
+    val path = "${System.getProperty("user.dir")}"
+    val list = mutableListOf<Int>()
+    File("$path/src/main/kotlin/adventofcode2021/Day1Data.txt").forEachLine {
+        list.add(it.toInt())
+    }
+
+    return list
 }
