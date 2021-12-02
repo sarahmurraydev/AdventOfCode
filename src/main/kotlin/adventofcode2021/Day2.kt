@@ -6,7 +6,7 @@ package adventofcode2021
 /**
  * Example Data:
  */
-val moves = listOf<String>(
+val testMoves = listOf<String>(
     "forward 5",
     "down 5",
     "forward 8",
@@ -15,12 +15,14 @@ val moves = listOf<String>(
     "forward 2"
 )
 
+val movesFromDataSet = getDataFromFileAsStringList(2)
+
 fun main(){
     println("Advent of Code Day 2!")
     println("=====================")
     println("My sub starts at d=0, h=0")
-    println("My sub makes ${moves.size} moves")
-    val (d, h) = getSubPositionAfterMoves(moves)
+    println("My sub makes ${movesFromDataSet.size} moves")
+    val (d, h) = getSubPositionAfterMoves(movesFromDataSet)
     println("My sub ends up at d=$d, h=$h")
     println("d x h = ${d*h}")
 }
