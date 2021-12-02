@@ -1,7 +1,8 @@
+import adventofcode2021.getDataFromFileAsIntList
 import java.io.File
 
 fun main(){
-    val myList = getDataFromFile()
+    val myList = getDataFromFileAsIntList(1)
     println("Day 1 Advent of Code 2021")
     println("My List has ${myList.size} elements")
     val increases = checkListForIncreases(myList)
@@ -46,20 +47,6 @@ fun checkListForIncreases(data: List<Int>): Int {
 
     return numOfIncreases
 }
-
-/**
- * Get Data from TXT File
- */
-fun getDataFromFile(): List<Int> {
-    val path = "${System.getProperty("user.dir")}"
-    val list = mutableListOf<Int>()
-    File("$path/src/main/kotlin/adventofcode2021/Day1Data.txt").forEachLine {
-        list.add(it.toInt())
-    }
-
-    return list
-}
-
 
 /**
  * Part 2: Three sum window
