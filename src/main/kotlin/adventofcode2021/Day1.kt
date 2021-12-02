@@ -80,9 +80,13 @@ fun checkListSetsForIncreases(data: List<Int>): Int {
     var numIncreases = 0
 
     for(i in 0..data.size-4) {
-        val set1Sum = data[i] + data[i+1] + data[i+2]
-        val set2Sum = data[i+1] + data[i+2] + data[i+3]
-        if(set2Sum > set1Sum) {
+        // val set1Sum = data[i] + data[i+1] + data[i+2]
+        // val set2Sum = data[i+1] + data[i+2] + data[i+3]
+        // set2Sum > set1Sum then becomes
+        // data[i+1] + data[i+2] + data[i+3] > data[i] + data[i+1] + data[i+2]
+        // which reduces to:
+        // data[i+3] > data[i]
+        if(data[i+3] > data[i]) {
             numIncreases += 1
         }
     }
