@@ -2,6 +2,10 @@ package adventofcode2021
 
 /**
  * Day 2: https://adventofcode.com/2021/day/2
+ *
+ * Answers:
+ * Part 1: 1728414  // (d=786, h=2199)
+ * Part 2: 1765720035 // d=802965, h=2199 -- makes sense depth is ton higher
  */
 /**
  * Example Data:
@@ -21,8 +25,9 @@ fun main(){
     println("Advent of Code Day 2!")
     println("=====================")
     println("My sub starts at d=0, h=0")
-    println("My sub makes ${testMoves.size} moves")
-    val (d, h) = getSubPositionAfterMoves(SubmarinePart2(), testMoves)
+    println("My sub makes ${movesFromDataSet.size} moves")
+    // change which Sub class for part 1 or part 2 answer
+    val (d, h) = getSubPositionAfterMoves(SubmarinePart2(), movesFromDataSet)
     println("My sub ends up at d=$d, h=$h")
     println("d x h = ${d*h}")
 }
