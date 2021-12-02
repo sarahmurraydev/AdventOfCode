@@ -21,30 +21,37 @@ fun main(){
     println("Advent of Code Day 2!")
     println("=====================")
     println("My sub starts at d=0, h=0")
-    println("My sub makes ${movesFromDataSet.size} moves")
-    val (d, h) = getSubPositionAfterMoves(movesFromDataSet)
+    println("My sub makes ${testMoves.size} moves")
+    val (d, h) = getSubPositionAfterMoves(SubmarinePart2(), testMoves)
     println("My sub ends up at d=$d, h=$h")
     println("d x h = ${d*h}")
 }
 
-private class Submarine(var depth: Int = 0, var horizontal: Int = 0) {
+abstract class BaseSubmarine(var depth: Int = 0, var horizontal: Int = 0) {
+    abstract fun moveDownN(n: Int)
+    abstract fun moveUpN(n: Int)
+    abstract fun moveForwardN(n: Int)
+}
 
-    fun moveDownN(n: Int) {
+/**
+ * Part 1 Class
+ */
+class Submarine(): BaseSubmarine() {
+
+    override fun moveDownN(n: Int) {
         depth += n
     }
 
-    fun moveUpN(n: Int) {
+    override fun moveUpN(n: Int) {
         depth -= n
     }
 
-    fun moveForwardN(n: Int) {
+    override fun moveForwardN(n: Int) {
         horizontal += n
     }
 }
 
-fun getSubPositionAfterMoves(moves: List<String>): Pair<Int, Int> {
-    val sub = Submarine()
-
+fun getSubPositionAfterMoves(sub:BaseSubmarine, moves: List<String>): Pair<Int, Int> {
     for (move in moves) {
         val numMoves = move.last().toString().toInt()
         // converting char to int with char.toInt gives ASCII value (ex: 5 --> 53)
@@ -61,10 +68,28 @@ fun getSubPositionAfterMoves(moves: List<String>): Pair<Int, Int> {
     }
 
     return Pair(sub.depth, sub.horizontal)
-
 }
 
+/**
+ * Part 2:
+ * down X increases your aim by X units.
+ * up X decreases your aim by X units.
+ * forward X does two things:
+ *      It increases your horizontal position by X units.
+ *      It increases your depth by your aim multiplied by X.
+ */
+class SubmarinePart2(var aim: Int = 0) : BaseSubmarine() {
 
+    override fun moveDownN(n: Int) {
+        aim += n
+    }
 
+    override fun moveUpN(n: Int) {
+        aim -= n
+    }
 
-
+    override fun moveForwardN(n: Int) {
+        horizontal += n
+        depth += aim * n
+    }
+}
