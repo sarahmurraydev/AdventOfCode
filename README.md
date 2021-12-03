@@ -3,9 +3,9 @@
 https://adventofcode.com/2021
 
 Progress:
-✅ solved and correct
-🤔 working on it 
-⏰ waiting problem to drop
+- ✅ solved and correct
+- 🤔 working on it 
+- ⏰ waiting problem to drop
 
 | Day | Part | Progress |
 | --- | --- | --- |
@@ -13,5 +13,5 @@ Progress:
 |  | 2 | ✅ |
 | 2 | 1 |  ✅ | 
 |  | 2 | ✅ | 
-| 3 | 1 | ⏰ |
+| 3 | 1 | 🤔 |
 |  | 2 | 
