@@ -3,7 +3,12 @@ package adventofcode2021
 fun main(){
     println("Advent of Code Day 3!")
     println("=====================")
+    println("====== Example Data: =======")
     println(getMostCommonBit(bits))
+
+    println("====== Actual Data: =======")
+    val day3Data = getDataFromFileAsStringList(3)
+    println(getMostCommonBit(day3Data))
 }
 
 val bits = listOf(
@@ -33,7 +38,9 @@ val bits = listOf(
 // then 1 is more common
 // else 0 is more common
 fun getMostCommonBit(data: List<String>): Int {
-    val sums = mutableListOf<Int>(0, 0, 0, 0, 0)
+    // make a list of the number of sums
+    val lengthOfBits = data[0].length
+    val sums = MutableList(lengthOfBits) { 0 }
     var gamma = ""
     var epsilon = ""
 
@@ -42,8 +49,7 @@ fun getMostCommonBit(data: List<String>): Int {
         // question today: how to split kotlin string into individual elements
         // ".split("") turned the bit into an array of
         // [, 0, 0, 1, 0, 0, ]
-        println("The bit is $bit")
-        for (j in 0..4) {
+        for (j in 0 until lengthOfBits) {
             // data[i].length should always be 4 but we'll just make is scalable
             // if the bits were of different lengths
             //println(bit[j])
@@ -51,8 +57,9 @@ fun getMostCommonBit(data: List<String>): Int {
             // have to convert to string then int
             sums[j] += bit[j].toString().toInt()
         }
-        println("The sums are now: $sums")
     }
+
+    println("The sums are now: $sums")
 
     for (s in sums.indices) {
         if (sums[s] < (data.size/2)) {
