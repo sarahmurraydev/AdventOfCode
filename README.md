@@ -7,11 +7,15 @@ Progress:
 - 🤔 working on it 
 - ⏰ waiting problem to drop
 
-| Day | Part | Progress |
-| --- | --- | --- |
+| Day | Part | Progress | Time* |
+| --- | --- | --- | ---| 
 | 1 | 1 | ✅ |
 |  | 2 | ✅ |
 | 2 | 1 |  ✅ | 
 |  | 2 | ✅ | 
-| 3 | 1 | ✅ |
-|  | 2 | 🤔
+| 3 | 1 | ✅ | 51:23.70
+|  | 2 | ✅  | 1:38:19 ... ouch 
+
+for the record I've still gotten every thing right on the first try
+
+day 3 was brutal, I gotta go back and clean that code up. I got the answer but brutally and very messy
