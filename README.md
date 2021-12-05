@@ -17,11 +17,11 @@ Progress:
 |  | 2 | ✅  | 1:38:19 ... ouch 
 | 4 | 1 | ✅ | 10+ 
 |   | 2 | ✅ |
-| 5 | 1 | 🤔 |
-
-for the record I've still gotten every thing right on the first try
+| 5 | 1 | ✅ | |
+|   | 2 | 🤔 | 
 
 day 3 was brutal, I gotta go back and clean that code up. I got the answer but brutally and very messy
 
 day 3 ranking: 34) 401 ****  ]
 day 4: 22) 556 *****  
+day 5 after part 1: 18) 639 

@@ -122,3 +122,4 @@ fun printGrid(grid: MutableList<MutableList<Int>>) {
 }
 
 /// part 1: first try got 4524 -- too low
+/// part 1 right answer: 6311
