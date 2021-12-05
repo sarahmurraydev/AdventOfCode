@@ -29,3 +29,18 @@ fun getDataFromFileAsStringList(day: Int): List<String> =
     File("${pathToDataDir}Day${day}Data.txt").useLines {
         it.toList()
     }
+
+/**
+ * s
+ */
+fun dataIntoMutableMatrix(day: Int): MutableList<MutableList<Int>> {
+    val list = mutableListOf<MutableList<Int>>()
+    File("${pathToDataDir}Day${day}Data.txt").forEachLine {
+        val sublist = it.split(" ")
+        val newSub = sublist.map { num ->
+            num.toInt()
+        }.toMutableList()
+        list.add(newSub)
+    }
+    return list
+}
