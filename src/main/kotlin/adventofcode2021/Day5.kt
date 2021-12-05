@@ -1,3 +1,4 @@
+import adventofcode2021.getDataFromFileAsStringList
 
 // need to find all places where two or more lines intersect
 // need to "draw" each line by adding 1s to matrix of 0s
@@ -8,7 +9,7 @@
 // then you can add all the points between (a, b) and (c, d)
 
 fun main() {
-    val (firstP, secondP) = turnDataIntoPoints(exData)
+    val (firstP, secondP) = turnDataIntoPoints(day5Data)
     for(p in firstP.indices) {
         plotPointsOnLine(firstP[p], secondP[p])
     }
@@ -26,6 +27,8 @@ val exData = mutableListOf<String>(
     "0,0 -> 8,8",
     "5,5 -> 8,2"
 )
+
+val day5Data = getDataFromFileAsStringList(5).toMutableList()
 
 fun turnDataIntoPoints(data: MutableList<String>): Pair<MutableList<Point>, MutableList<Point>> {
     val firstPoints = mutableListOf<Point>()
@@ -49,14 +52,15 @@ fun getSlope(point1: Point, point2: Point): Int {
     return (point2.y - point1.y) / (point2.x - point2.y)
 }
 
-val grid = MutableList(10) { MutableList(10) { 0 } }
+val exGrid = MutableList(10) { MutableList(10) { 0 } }
+val grid = MutableList(1000) { MutableList(1000) { 0 } }
 var countIntersections = 0
 
 fun plotPointsOnLine(point1: Point, point2: Point) {
     println("plotting points: $point1, $point2")
     // only care about horizontal or vertical lines part 1
     if(point1.x == point2.x) {
-        println("horizontal line")
+        println("    horizontal line")
         // find out how many points you need to plot
         var ySpread: Int
         var startingPoint: Point
@@ -69,20 +73,20 @@ fun plotPointsOnLine(point1: Point, point2: Point) {
         }
 
         for(y in 0..ySpread) {
-            println("setting grid point (${startingPoint.x}, $${startingPoint.y + y})")
-            println("previous count at point: ${grid[y][startingPoint.x]}")
+            println("        setting grid point (${startingPoint.x}, ${startingPoint.y + y})")
+            println("        previous count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
             grid[startingPoint.y + y][startingPoint.x] += 1
-            println("new count at point: ${grid[y][startingPoint.x]}")
+            println("        new count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
             // if at least 2 lines hit this point, add to intersection count
             // only do "==2" not ">=2" so we only count each intersection once
-            if(grid[y][startingPoint.x] == 2) {
-                println("incremenat intersections")
+            if(grid[startingPoint.y + y][startingPoint.x] == 2) {
+                println("    increment intersections")
                 countIntersections += 1
             }
         }
 
     } else if (point1.y == point2.y) {
-        println("vertical line")
+        println("    vertical line")
         var xSpread: Int
         var startingPoint: Point
         if(point2.x > point1.x) {
@@ -94,17 +98,17 @@ fun plotPointsOnLine(point1: Point, point2: Point) {
         }
 
         for(x in 0..xSpread) {
-            println("setting grid point (${startingPoint.x + x}, ${startingPoint.y})")
+            println("        setting grid point (${startingPoint.x + x}, ${startingPoint.y})")
             println("previous count at point: ${grid[startingPoint.y][startingPoint.x + x] }")
             grid[startingPoint.y][startingPoint.x + x] += 1
-            println("new count at point: ${grid[startingPoint.y][x]}")
+            println("        new count at point: ${grid[startingPoint.y][startingPoint.x + x]}")
             if(grid[startingPoint.y][startingPoint.x + x] == 2) {
-                println("incremenat intersections")
+                println("        increment intersections")
                 countIntersections += 1
             }
         }
     }
-    println(printGrid(grid))
+    //println(printGrid(grid))
     println("There are now $countIntersections intersections")
 }
 
@@ -117,3 +121,4 @@ fun printGrid(grid: MutableList<MutableList<Int>>) {
     println("| ========== |")
 }
 
+/// part 1: first try got 4524 -- too low
