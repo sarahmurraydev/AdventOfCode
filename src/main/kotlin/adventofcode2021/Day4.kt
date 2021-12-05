@@ -5,7 +5,9 @@ fun main(){
     println("=====================")
     println("====== Example Data: =======")
 
-    println(gotBingo(exBingoCards, exNumbersCalled))
+    val value = gotBingo(exBingoCards, exNumbersCalled)
+    println("score is $value")
+
     println("====== Actual Data: =======")
     //val day4Data = getDataFromFileAsStringList(4)
 
@@ -50,7 +52,7 @@ val exBingoCards = mutableListOf(
     mutableListOf(2,  0, 12,  3,  7)
 )
 
-fun gotBingo(bingoCards: MutableList<MutableList<Int>>, numbersCalled: List<Int>): String {
+fun gotBingo(bingoCards: MutableList<MutableList<Int>>, numbersCalled: List<Int>): Int? {
     for (num in numbersCalled) {
         var rowSum = 0
         var colSum = 0
@@ -65,15 +67,17 @@ fun gotBingo(bingoCards: MutableList<MutableList<Int>>, numbersCalled: List<Int>
                 rowSum += bingoCards[row][col]
                 colSum += bingoCards[col][row]
 
-                println("row sum: $rowSum")
+                //println("row sum: $rowSum")
 
                 if (rowSum == 500 || colSum == 500) {
                     println("we got bingo!")
                     println("In card number ${(row % 5) + 1}")
                     println("On number ${numbersCalled[num]}")
                     println("It took ${num + 1 } numbers to be called before we got bingo")
-                    println("sumOfRows: $sumOfRows, ${sumOfRows.sum()}")
-                    return "Bingo!"
+                    //println("Winning card:")
+                    val numsCalledSubSet = numbersCalled.subList(0, num+1)
+                    val sum = getSumOfWinningCard(row % 5, bingoCards, numsCalledSubSet)
+                    return sum * numbersCalled[num]
                 }
             }
             // now get the sum of all the unmarked numbers on the board
@@ -81,6 +85,30 @@ fun gotBingo(bingoCards: MutableList<MutableList<Int>>, numbersCalled: List<Int>
             sumOfRows[row] = rowSum
         }
     }
-    return "Bingo!"
+    return null
+}
+
+fun getSumOfWinningCard(cardNum: Int?, bingoCards: MutableList<MutableList<Int>>, numbersCalled: List<Int>): Int {
+    if(cardNum == null) return 0
+
+    val startingRow = cardNum * 5
+    val endingRow = startingRow + 4
+
+    var sum = 0
+
+    println("============")
+
+    for (i in startingRow..endingRow) {
+        //println(bingoCards[i])
+        for (j in 0..4) {
+            val ele = bingoCards[i][j]
+            if(!numbersCalled.contains(ele)) {
+                sum += ele
+            }
+        }
+    }
+    println("============")
+    println("sum: $sum")
+    return sum
 }
 
