@@ -71,14 +71,26 @@ val data = dataIntoMutableMatrix(4).chunked(5)
 val chunkedBingoCards = exBingoCards.chunked(5)
 
 fun callNumbers(nums: List<Int>, bingoCards: MutableList<MutableList<MutableList<Int>>>): String {
+    val cardHasBingo = MutableList(bingoCards.size) { false }
     for (num in nums) {
         for (cardNum in bingoCards.indices) {
             val checkedBingo = checkBingoCardForNumber(bingoCards[cardNum], num, cardNum)
             if(checkedBingo.second) {
-                println("got bingo!")
+                //println("got bingo on card $cardNum!")
+                // val sumOfWinningCard = getSumOfCard(cardNum, bingoCards[cardNum])
+                // val score = sumOfWinningCard * num
+                cardHasBingo[cardNum] = true
+                //println(cardHasBingo)
+            }
+            //println("After number $num was called, ${cardHasBingo.count { it == true}} cards have bingo out of ${bingoCards.size}")
+
+            if (!cardHasBingo.contains(false)) {
+                // all the cards now have bingo
+                println("the last card to get bingo was $cardNum when $num was called")
                 val sumOfWinningCard = getSumOfCard(cardNum, bingoCards[cardNum])
                 val score = sumOfWinningCard * num
                 return "Card $cardNum has bingo with a score of $score"
+                // got: Card 64 has bingo with a score of 11840 -- too high
             }
         }
     }
@@ -93,21 +105,22 @@ fun checkBingoCardForNumber(
 ): Pair<MutableList<MutableList<Int>>, Boolean>{
     for (r in card.indices) {
         var rowSum = 0
+        var colSum = 0
         for (c in card[r].indices) {
-            var colSum = 0
             if (card[r][c] == num) {
                 card[r][c] = -1
             }
             rowSum += card[r][c]
             colSum += card[c][r]
-
-            if(checkForBingo(colSum)) {
-                println("col $c has bingo")
-                return Pair(card, true)
-            }
         }
+
         if(checkForBingo(rowSum)) {
             println("row $r of card $cardNum has bingo when number $num is called")
+            return Pair(card, true)
+        }
+
+        if(checkForBingo(colSum)) {
+            println("col has bingo")
             return Pair(card, true)
         }
     }
