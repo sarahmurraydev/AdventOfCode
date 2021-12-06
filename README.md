@@ -18,7 +18,11 @@ Progress:
 | 4 | 1 | ✅ | 10+ 
 |   | 2 | ✅ |
 | 5 | 1 | ✅ | |
-|   | 2 | ✅ | 
+|   | 2 | ✅ | | 
+| 6 | 1 | ✅  | 
+|   | 2 | ✅  |
+| 7 | 1 | ⏰ |
+| 7 | 2 | ⏰ |
 
 day 3 was brutal, I gotta go back and clean that code up. I got the answer but brutally and very messy
 

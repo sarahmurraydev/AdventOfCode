@@ -5,7 +5,7 @@ import kotlin.math.pow
 fun main() {
     println("=====================")
     println("Advent of Code Day 5!")
-    val convertedData = convertDataStringToInt(exData)
+    val convertedData = convertDataStringToInt(realData)
     val days = 256.toLong()
     //println("After $days days we have ${haveFish(days, convertedData)}")
     //println("After $days days we have ${expoRate(days, convertedData.size, (1.toFloat())/(9.toFloat()))} fish")
@@ -54,6 +54,7 @@ fun expoRate(days: Int, initial: Int, growthRate: Float): Float {
     return initial * (1 + growthRate).pow(days)
 }
 
+// part 2: -- works
 fun countNewFish(fish: MutableList<Long>, days: Long) {
     // make an array were fishTimer[0] == fish about to spawn
     val fishTimer = MutableList(9) { 0.toLong() }
@@ -62,25 +63,13 @@ fun countNewFish(fish: MutableList<Long>, days: Long) {
         fishTimer[fish[f].toInt()] += 1.toLong()
     }
 
-    println("initial fish timer: $fishTimer")
-
     var daysToGo = days
     while (daysToGo > 0) {
         // check how many fish are spawning today
         // Recall: every day X fish have timer of 0, the next day those X fish have timer of 6 & there are X new fish with timer of 8
         val fishBornToday = fishTimer[0].toLong()
-        if (days - daysToGo > 245) println("At day ${days - daysToGo} the count is $fishTimer")
         fishTimer.removeAt(0) // pop off the fish about to spawn so fish shift down 1 day
         // then add the new fish because they don't start tracking today
-        if (days - daysToGo > 245)  println("there are $fishBornToday fish born today! Happy birthday :D ")
-        if (days - daysToGo > 247) {
-            println("===================")
-            println("Number of fish on day 6: ${fishTimer[6]}")
-            println("Number of fish born today: ${fishBornToday}")
-            println("New number of fish on day 6: ${fishTimer[6] + fishBornToday}")
-            println("New number of fish on day 6: ${1066366882.toLong() + 1263344510.toLong()}")
-            println("===================")
-        }
         fishTimer[6] += fishBornToday
         fishTimer.add(8, fishBornToday)
         daysToGo -= 1
