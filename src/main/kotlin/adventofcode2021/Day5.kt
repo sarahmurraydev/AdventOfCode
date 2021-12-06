@@ -1,4 +1,5 @@
 import adventofcode2021.getDataFromFileAsStringList
+import java.lang.Math.abs
 
 // need to find all places where two or more lines intersect
 // need to "draw" each line by adding 1s to matrix of 0s
@@ -9,7 +10,7 @@ import adventofcode2021.getDataFromFileAsStringList
 // then you can add all the points between (a, b) and (c, d)
 
 fun main() {
-    val (firstP, secondP) = turnDataIntoPoints(exData)
+    val (firstP, secondP) = turnDataIntoPoints(day5Data)
     for(p in firstP.indices) {
         plotPointsOnLine(firstP[p], secondP[p])
     }
@@ -53,8 +54,8 @@ fun getSlope(point1: Point, point2: Point): Int? {
     else (point2.y - point1.y) / (point2.x - point1.x)
 }
 
-val grid = MutableList(10) { MutableList(10) { 0 } }
-//val grid = MutableList(1000) { MutableList(1000) { 0 } }
+//val grid = MutableList(10) { MutableList(10) { 0 } }
+val grid = MutableList(1000) { MutableList(1000) { 0 } }
 var countIntersections = 0
 
 fun plotPointsOnLine(point1: Point, point2: Point) {
@@ -63,9 +64,9 @@ fun plotPointsOnLine(point1: Point, point2: Point) {
     when (getSlope(point1, point2)) {
         null -> plotVerticalLines(point1, point2)
         0 -> plotHorizontalLines(point1, point2)
-        1 -> plotDiagonalLines(point1, point2)
+        1, -1 -> plotDiagonalLines(point1, point2)
     }
-    println(printGrid(grid))
+    //println(printGrid(grid))
     println("There are now $countIntersections intersections")
 }
 
@@ -82,7 +83,29 @@ fun printGrid(grid: MutableList<MutableList<Int>>) {
 
 /// part 2 -- also want to plot lines that have slope of 1
 fun plotDiagonalLines(point1: Point, point2: Point) {
-    println("need to print a diagonal line")
+    println("    diagonal line")
+    var xSpread = point2.x - point1.x
+    var ySpread = point2.y - point1.y
+    var absX = abs(xSpread)
+    var absY = abs(ySpread)
+
+    while (absX > -1 && absY > -1) {
+        //println("x: $xSpread, y:$ySpread")
+        //println("        plotting point at (${point1.x + xSpread}, ${point1.y + ySpread})")
+        //println("        new count at point: ${ grid[point1.y + ySpread][point1.x + xSpread]}")
+        grid[point1.y + ySpread][point1.x + xSpread] += 1
+        //println("        new count at point: ${ grid[point1.y + ySpread][point1.x + xSpread]}")
+        if (grid[point1.y + ySpread][point1.x + xSpread] == 2) {
+            //println("    increment intersections")
+            countIntersections += 1
+        }
+        if(xSpread > 0) xSpread -= 1 else xSpread += 1
+        if(ySpread > 0) ySpread -= 1 else ySpread += 1
+        absX -= 1
+        absY -= 1
+
+        //println("x: $xSpread, y:$ySpread")
+    }
 }
 
 fun plotVerticalLines(point1: Point, point2: Point) {
@@ -99,14 +122,14 @@ fun plotVerticalLines(point1: Point, point2: Point) {
     }
 
     for(y in 0..ySpread) {
-        println("        setting grid point (${startingPoint.x}, ${startingPoint.y + y})")
-        println("        previous count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
+        //println("        setting grid point (${startingPoint.x}, ${startingPoint.y + y})")
+        //println("        previous count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
         grid[startingPoint.y + y][startingPoint.x] += 1
-        println("        new count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
+        //println("        new count at point: ${grid[startingPoint.y + y][startingPoint.x]}")
         // if at least 2 lines hit this point, add to intersection count
         // only do "==2" not ">=2" so we only count each intersection once
         if (grid[startingPoint.y + y][startingPoint.x] == 2) {
-            println("    increment intersections")
+            //println("    increment intersections")
             countIntersections += 1
         }
     }
@@ -125,12 +148,12 @@ fun plotHorizontalLines(point1: Point, point2: Point) {
     }
 
     for(x in 0..xSpread) {
-        println("        setting grid point (${startingPoint.x + x}, ${startingPoint.y})")
-        println("previous count at point: ${grid[startingPoint.y][startingPoint.x + x] }")
+        //println("        setting grid point (${startingPoint.x + x}, ${startingPoint.y})")
+        //println("previous count at point: ${grid[startingPoint.y][startingPoint.x + x] }")
         grid[startingPoint.y][startingPoint.x + x] += 1
-        println("        new count at point: ${grid[startingPoint.y][startingPoint.x + x]}")
+        //println("        new count at point: ${grid[startingPoint.y][startingPoint.x + x]}")
         if(grid[startingPoint.y][startingPoint.x + x] == 2) {
-            println("        increment intersections")
+            //println("        increment intersections")
             countIntersections += 1
         }
     }
