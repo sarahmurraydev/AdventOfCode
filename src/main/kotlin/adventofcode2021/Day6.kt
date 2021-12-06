@@ -6,7 +6,7 @@ fun main() {
     println("=====================")
     println("Advent of Code Day 5!")
     val convertedData = convertDataStringToInt(exData)
-    val days = 256
+    val days = 256.toLong()
     //println("After $days days we have ${haveFish(days, convertedData)}")
     //println("After $days days we have ${expoRate(days, convertedData.size, (1.toFloat())/(9.toFloat()))} fish")
     countNewFish(convertedData, days)
@@ -15,11 +15,11 @@ fun main() {
 const val exData = "3,4,3,1,2"
 const val realData = "5,1,2,1,5,3,1,1,1,1,1,2,5,4,1,1,1,1,2,1,2,1,1,1,1,1,2,1,5,1,1,1,3,1,1,1,3,1,1,3,1,1,4,3,1,1,4,1,1,1,1,2,1,1,1,5,1,1,5,1,1,1,4,4,2,5,1,1,5,1,1,2,2,1,2,1,1,5,3,1,2,1,1,3,1,4,3,3,1,1,3,1,5,1,1,3,1,1,4,4,1,1,1,5,1,1,1,4,4,1,3,1,4,1,1,4,5,1,1,1,4,3,1,4,1,1,4,4,3,5,1,2,2,1,2,2,1,1,1,2,1,1,1,4,1,1,3,1,1,2,1,4,1,1,1,1,1,1,1,1,2,2,1,1,5,5,1,1,1,5,1,1,1,1,5,1,3,2,1,1,5,2,3,1,2,2,2,5,1,1,3,1,1,1,5,1,4,1,1,1,3,2,1,3,3,1,3,1,1,1,1,1,1,1,2,3,1,5,1,4,1,3,5,1,1,1,2,2,1,1,1,1,5,4,1,1,3,1,2,4,2,1,1,3,5,1,1,1,3,1,1,1,5,1,1,1,1,1,3,1,1,1,4,1,1,1,1,2,2,1,1,1,1,5,3,1,2,3,4,1,1,5,1,2,4,2,1,1,1,2,1,1,1,1,1,1,1,4,1,5"
 
-fun convertDataStringToInt(data: String): MutableList<Int> {
+fun convertDataStringToInt(data: String): MutableList<Long> {
     val splitData = data.split(",")
 
     return splitData.map {
-        it.toInt()
+        it.toLong()
     }.toMutableList()
 }
 
@@ -54,12 +54,12 @@ fun expoRate(days: Int, initial: Int, growthRate: Float): Float {
     return initial * (1 + growthRate).pow(days)
 }
 
-fun countNewFish(fish: MutableList<Int>, days: Int) {
+fun countNewFish(fish: MutableList<Long>, days: Long) {
     // make an array were fishTimer[0] == fish about to spawn
-    val fishTimer = MutableList(9) { 0 }
+    val fishTimer = MutableList(9) { 0.toLong() }
     for (f in fish.indices) {
         // fish[f] == days left until fish spawns
-        fishTimer[fish[f]] += 1
+        fishTimer[fish[f].toInt()] += 1.toLong()
     }
 
     println("initial fish timer: $fishTimer")
@@ -68,7 +68,7 @@ fun countNewFish(fish: MutableList<Int>, days: Int) {
     while (daysToGo > 0) {
         // check how many fish are spawning today
         // Recall: every day X fish have timer of 0, the next day those X fish have timer of 6 & there are X new fish with timer of 8
-        val fishBornToday = fishTimer[0]
+        val fishBornToday = fishTimer[0].toLong()
         if (days - daysToGo > 245) println("At day ${days - daysToGo} the count is $fishTimer")
         fishTimer.removeAt(0) // pop off the fish about to spawn so fish shift down 1 day
         // then add the new fish because they don't start tracking today
@@ -78,7 +78,7 @@ fun countNewFish(fish: MutableList<Int>, days: Int) {
             println("Number of fish on day 6: ${fishTimer[6]}")
             println("Number of fish born today: ${fishBornToday}")
             println("New number of fish on day 6: ${fishTimer[6] + fishBornToday}")
-            println("New number of fish on day 6: ${1066366882 + 1263344510}")
+            println("New number of fish on day 6: ${1066366882.toLong() + 1263344510.toLong()}")
             println("===================")
         }
         fishTimer[6] += fishBornToday
@@ -118,3 +118,6 @@ fun countNewFish(fish: MutableList<Int>, days: Int) {
 // (80, 5934) ==> r = 1482.2500%
 
 // part2: got 1214653763 -- too low
+
+// googled things:
+// https://stackoverflow.com/questions/49819717/why-the-value-of-sum-is-coming-out-to-be-negative
