@@ -1,6 +1,7 @@
 package adventofcode2021.days
 
 import java.lang.Math.abs
+import kotlin.math.roundToInt
 
 // Notes:
 // want to track least number of moves to align everyone
@@ -25,14 +26,32 @@ val movesToTen = listOf(6, 9, 8, 10, 6, 8, 3, 9, 8, 4) // avg 7.1
 // we want to MINIMIZE this sum (or to once again make it more complicated, "the average")
 
 // what if we sort it and try the median or mode?
+// Part 1: wasn't sure if it was median or mode that would be best so I wrote for both, median was lower and that was the right guess
+// Part 1 outputs:
+// The mode is 0
+// The median is 347
+// Moving to the mode would cost 486505 fuel
+// Moving to the median would cost 347449 fuel --> right answer
+
+// Part 2 -- now 5 is the best spot -- could this mean the average is the best?
+// I also have to edit my fuel calculations
+// part guessed 98039615  -- too high -- tried the average rounded to nearest int = (487)
+// average was 486.505 so let me try 486 just for vibes
+// getCostToPositionPart2(data, 486) returns 98039527 which was the right answer :)
+
 fun main() {
     println(example.sorted())
     val mode = getMode(data)
     val median = getMedian(data)
+    val average = getAverage(data)
     println("The mode is $mode")
     println("The median is $median")
-    println("Moving to the mode would cost ${getCostToValue(data, mode)} fuel")
-    println("Moving to the median would cost ${getCostToValue(data, median)} fuel")
+    println("The average is $average")
+    // println("Moving to the mode for part 1 would cost   : ${getCostToValue(data, mode)} fuel")
+    // println("Moving to the median for part 1 would cost : ${getCostToValue(data, median)} fuel")
+    println("Moving to the mode for part 2 would cost   : ${getCostToPositionPart2(data, mode)}")
+    println("Moving to the median for part 2 would cost : ${getCostToPositionPart2(data, median)}")
+    println("Moving to the average for part 2 would cost: ${getCostToPositionPart2(data, 486)}")
 }
 
 fun getMode(data: List<Int>): Int {
@@ -52,10 +71,22 @@ fun getMedian(data: List<Int>): Int {
     return dataGroupedByCount[middleIndex]
 }
 
+fun getAverage(data: List<Int>): Double {
+    return data.average()
+}
+
 fun getCostToValue(data: List<Int>, pos: Int): Int {
     val differences = MutableList(data.size) { 0 }
     for (d in data.indices) {
         differences[d] = abs(data[d] - pos)
+    }
+    return differences.sum()
+}
+
+fun getCostToPositionPart2(data: List<Int>, pos: Int): Int {
+    val differences = MutableList(data.size) { 0 }
+    for (d in data.indices) {
+        differences[d] = IntRange(0, abs(data[d] - pos)).sum()
     }
     return differences.sum()
 }
