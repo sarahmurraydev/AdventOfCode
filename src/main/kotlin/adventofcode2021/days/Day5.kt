@@ -1,3 +1,5 @@
+package adventofcode2021.days
+
 import adventofcode2021.getDataFromFileAsStringList
 import java.lang.Math.abs
 
