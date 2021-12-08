@@ -49,8 +49,8 @@ fun main() {
     println("The average is $average")
     // println("Moving to the mode for part 1 would cost   : ${getCostToValue(data, mode)} fuel")
     // println("Moving to the median for part 1 would cost : ${getCostToValue(data, median)} fuel")
-    println("Moving to the mode for part 2 would cost   : ${getCostToPositionPart2(data, mode)}")
-    println("Moving to the median for part 2 would cost : ${getCostToPositionPart2(data, median)}")
+    //println("Moving to the mode for part 2 would cost   : ${getCostToPositionPart2(data, mode)}")
+    //println("Moving to the median for part 2 would cost : ${getCostToPositionPart2(data, median)}")
     println("Moving to the average for part 2 would cost: ${getCostToPositionPart2(data, 486)}")
 }
 
