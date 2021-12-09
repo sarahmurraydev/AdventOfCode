@@ -44,3 +44,21 @@ fun dataIntoMutableMatrix(day: Int): MutableList<MutableList<Int>> {
     }
     return list
 }
+
+/**
+ * Day 9 -- convert matrix with no spaces
+ */
+fun dataAsMatrix(day: Int): MutableList<MutableList<Int>> {
+    val list = mutableListOf<MutableList<Int>>()
+    File("${pathToDataDir}Day${day}Data.txt").forEachLine {
+        val sublist = it.split("")
+        // don't include the first and last elements -- they are empty ""
+        val subNoSpaces = sublist.subList(1, sublist.size - 1)
+        val newSub = subNoSpaces.map { num ->
+            num.toInt()
+        }.toMutableList()
+        list.add(newSub)
+    }
+    return list
+}
+
