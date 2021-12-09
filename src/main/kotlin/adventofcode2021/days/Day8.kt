@@ -22,10 +22,10 @@ val day8exData = listOf(
 fun main() {
     val day8ExP1 = splitDataPart1(day8exData)
     val day8ExP2 = splitDataPart2(smallerExData)
-    val day8Data = splitDataPart1(getDataFromFileAsStringList(8))
+    val day8Data = splitDataPart2(getDataFromFileAsStringList(8))
     //convertLettersToSize(day8ExP1)
     convertLettersToSize(day8ExP2)
-    //convertLettersToSize(day8Data)
+    convertLettersToSize(day8Data)
 }
 
 fun splitDataPart1(data: List<String>): List<List<String>> {
@@ -45,7 +45,7 @@ fun convertLettersToSize(data: List<List<String>>) {
     var counts = 0 // mutableListOf<List<Int>>()
     for (d in data.indices) {
         // counts.add(data[d].map { it.length })
-        mapLettersToSegments(data[d])
+        //mapLettersToSegments(data[d])
         for (str in data[d]) {
             if (checkLengthIsUnique(str)) counts += 1
         }
@@ -72,33 +72,29 @@ fun checkLengthIsUnique(str: String): Boolean {
  */
 
 // set the variables for the segments, they will be assigned later
-var top = ""
-var topRight = ""
-var bottomRight = ""
-var bottom = ""
-var bottomLeft = ""
-var middle = ""
-var topLeft = ""
+var top = ""; var topRight = ""; var bottomRight = ""; var bottom = ""
+var bottomLeft = ""; var middle = ""; var topLeft = ""
+var zero = ""; var one = ""; var two = ""; var three = ""; var four = "";
+var five = ""; var six = ""; var seven = ""; var eight = ""; var nine = ""
 
 fun mapLettersToSegments(data: List<String>) {
     val strCountSorted = data.sortedBy { it.length }
     println(strCountSorted)
 
     // get unique digits: strCountSorted = [2, 3, 4, 5, 5, 5, 6, 6, 6, 7]
-    val oneSegments = strCountSorted.first()
-    val sevenSegments = strCountSorted[1] // value = 3
-    val fourSegments = strCountSorted[3] // value = 4
-    val eightSegments = strCountSorted.last() // value = 7
+    one = strCountSorted.first()
+    seven = strCountSorted[1] // value = 3
+    four = strCountSorted[2] // value = 4
+    eight = strCountSorted.last() // value = 7
     val fivePartDigits = strCountSorted.filter { it.length == 5  }
     val sixPartDigits = strCountSorted.filter { it.length == 6 }
 
     // the top segment is the segment in seven, but not in one
-    top = findTopSegment(oneSegments, sevenSegments)
+    top = findTopSegment(one, seven)
 
     // the bottomRight segment is the segment in six and one
     // six is the the str of size 6 that does not contain both elements of one
-    var sixSegments = findRightAndSixSegments(oneSegments, sixPartDigits)
-
+    six = findRightAndSixSegments(one, sixPartDigits)
 
     printSegments()
 }
@@ -112,10 +108,15 @@ fun findTopSegment(one: String, seven: String): String {
 
 fun findRightAndSixSegments(one: String, piecesWithSixLetters: List<String>): String {
     val sixthPiece = piecesWithSixLetters.filter {
-        println("$it: ${!(it.contains(one.first()) && it.contains(one.last()))}")
         !(it.contains(one.first()) && it.contains(one.last()))
     } // 6 does not have both segments of one
-    // should leave one element == 6
+    val zeroAndNine = piecesWithSixLetters.filter {
+        // opposite of above case
+        it.contains(one.first()) && it.contains(one.last())
+    }
+
+    defineZeroAndNine(zeroAndNine)
+
     val segSix = sixthPiece.first()
 
     if (segSix.contains(one.first())) {
@@ -129,6 +130,31 @@ fun findRightAndSixSegments(one: String, piecesWithSixLetters: List<String>): St
     }
 
     return segSix
+}
+
+fun defineZeroAndNine(nums: List<String>) {
+    println("four is $four")
+    println("zero and nine is: $nums")
+    // find out which string doesn't have all the elements of 4
+    // ==> that string is zero and the segment it's missing is the middle one
+    val isFirstElementNine = four.map { nums[0].contains(it) }.contains(true)
+    if(isFirstElementNine) {
+        nine = nums.first()
+        zero = nums.last()
+    } else {
+        nine = nums.last()
+        zero = nums.first()
+    }
+}
+
+fun printNumbers() {
+    println("zero is $zero")
+    println("one is $one")
+    println("the bottom right is $bottomRight")
+    println("the bottom is $bottom")
+    println("the left bottom is $bottomLeft")
+    println("the middle is $middle")
+    println("the left top is $topLeft")
 }
 
 fun printSegments() {
